@@ -1,0 +1,10 @@
+﻿  main.cpp
+C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(94,12): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(95,12): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(103,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(104,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(108,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(109,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(110,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(111,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
+  openglproject.vcxproj -> C:\Users\cepel\Desktop\C++ random\openglproject\x64\Debug\openglproject.exe
