@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{0f8fb9b0-a9a7-4861-8e0a-d2ba5d65184d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,15 +29,27 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertShader.vert">
-      <Filter>Zdrojové soubory</Filter>
+    <None Include="cubeShader.vert">
+      <Filter>Shaders</Filter>
     </None>
-    <None Include="fragShader.frag">
-      <Filter>Zdrojové soubory</Filter>
+    <None Include="cubeShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="lightSource.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="lightSource.vert">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
   </ItemGroup>
