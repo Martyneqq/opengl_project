@@ -41,6 +41,7 @@
     <None Include="lightSource.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="assimp-vc143-mtd.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">

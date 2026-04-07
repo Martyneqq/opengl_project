@@ -1,10 +1,7 @@
-﻿  main.cpp
-C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(94,12): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(95,12): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(103,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(104,17): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(108,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(109,19): warning C4244: inicializování: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(110,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-C:\Users\cepel\Desktop\C++ random\openglproject\main.cpp(111,13): warning C4244: =: double se převádí na float; může dojít ke ztrátě dat.
-  openglproject.vcxproj -> C:\Users\cepel\Desktop\C++ random\openglproject\x64\Debug\openglproject.exe
+﻿  Camera.cpp
+  main.cpp
+  Generování kódu...
+C:\Users\cepel\Desktop\opengl\opengl_project\camera.h(3,10): error C1083: Nejde otevřít soubor zahrnout: glm/glm.hpp: No such file or directory
+  (kompilování zdrojového souboru Camera.cpp)
+  
+C:\Users\cepel\Desktop\opengl\opengl_project\main.cpp(1,10): error C1083: Nejde otevřít soubor zahrnout: glm/vec3.hpp: No such file or directory

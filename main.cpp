@@ -6,8 +6,6 @@
 #include <glm/ext/scalar_constants.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <ft2build.h>
-#include FT_FREETYPE_H
 #include <map>
 #include <iostream>
 #include "Shader.h"
@@ -24,6 +22,7 @@
 };
 
 std::map<GLchar, Character> Characters;*/
+
 
 float vertices[] = {
     // positions          // colors           // texture coords
@@ -88,6 +87,13 @@ glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
 
+glm::vec3 lastCameraPos = cameraFront;
+glm::vec3 lastCameraFront = cameraPos;
+glm::vec3 lastCameraUp = cameraUp;
+
+bool isBKeyPressed = false;
+bool isViewChanged = false;
+
 float united[sizeof(vertices)];
 
 unsigned int VBO, VAO, textVAO, textVBO;
@@ -142,6 +148,11 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
+    if (isViewChanged) // restrict camera movement when the view is changed
+    {
+        return;
+    }
+    
     if (firstMouse)
     {
         lastX = xpos;
@@ -214,19 +225,84 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 
 void processInput(GLFWwindow* window)
 {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    if (!isViewChanged)
+    {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        //std::cout << "Cursor disabled" << std::endl;
+    }
+    if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS && !isBKeyPressed)
+    {
+        isBKeyPressed = true; // Record that B was pressed
+
+        isViewChanged = !isViewChanged; // Toggle the view change state
+
+        if (!(cameraFront == lastCameraFront))
+        {
+            std::cout << "{" << cameraFront.x << ", ";
+            std::cout << cameraFront.y << ", ";
+            std::cout << cameraFront.z << "}" << std::endl;
+        }
+
+        if (isViewChanged)
+        {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            std::cout << "Cursor enabled" << std::endl;
+
+            lastCameraPos = cameraPos;
+            lastCameraFront = cameraFront; // Save the current camera front before changing view
+            lastCameraUp = cameraUp;
+
+            cameraPos = glm::vec3(0.0f, 10.0f, 0.0f);
+            cameraFront = glm::vec3(0.0f, -1.0f, 0.0f);
+            cameraUp = glm::vec3(0.0f, 0.0f, -1.0f);
+
+            std::cout << "View changed to top-down" << std::endl;
+        }
+        else
+        {
+            cameraPos = lastCameraPos;
+            cameraFront = lastCameraFront; // Restore the previous camera front
+            cameraUp = lastCameraUp;
+
+            std::cout << "View changed to original" << std::endl;
+        }
+    }
+    if (glfwGetKey(window, GLFW_KEY_B) == GLFW_RELEASE)
+    {
+        isBKeyPressed = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    {
         glfwSetWindowShouldClose(window, true);
     }
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-        cameraPos += cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+        if (!isViewChanged)
+        {
+            cameraPos += cameraFront * cameraSpeed;
+        }
+        else
+        {
+            cameraPos += cameraUp * cameraSpeed;
+        }
     }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
-        cameraPos -= cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        if (!isViewChanged)
+        {
+            cameraPos -= cameraFront * cameraSpeed;
+        }
+        else
+        {
+            cameraPos -= cameraUp * cameraSpeed;
+        }
     }
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     }
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     }
 }
@@ -249,8 +325,8 @@ int main()
         glfwTerminate();
         return -1;
     }
-    glfwMakeContextCurrent(window);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwMakeContextCurrent(window); 
+    
     glfwSetCursorPosCallback(window, mouse_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -374,6 +450,8 @@ int main()
     stbi_image_free(data);
     
     glfwSetScrollCallback(window, scroll_callback);
+
+
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
@@ -389,6 +467,13 @@ int main()
         cubeShader.use();
         cubeShader.setMat4("view", view);
         cubeShader.setMat4("projection", projection);
+
+        /*lightShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+        lightShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+        lightShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        lightShader.setFloat("material.shininess", 32.0f);*/
+
+        
         
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 10; i++)
